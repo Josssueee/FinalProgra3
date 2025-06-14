@@ -8,15 +8,15 @@ plugins {
 android {
     namespace = "com.example.finalprogra"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "27.0.12077973" // ¡Corregido! Ahora la sintaxis es correcta
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = "1.8" // ¡Corregido! Usa comillas dobles para el string '1.8'
     }
 
     defaultConfig {
@@ -31,14 +31,23 @@ android {
     }
 
     buildTypes {
+        debug { // ¡Agregado el bloque debug!
+            signingConfig = signingConfigs.getByName("debug")
+            coreLibraryDesugaringEnabled = true // ¡Agregado para el desugaring!
+        }
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("debug")
+            coreLibraryDesugaringEnabled = true // ¡Agregado para el desugaring!
         }
     }
 }
 
 flutter {
     source = "../.."
+}
+
+dependencies { // ¡Agregado el bloque de dependencias!
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4") // Dependencia para desugaring
 }
